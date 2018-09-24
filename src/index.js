@@ -36,7 +36,7 @@ module.exports = function longestConsecutiveLength(array) {
       maxLength = countBig + countSmall + 1;
     }
     if (maxLength < 2) i += maxLength - 1;
-    else i += maxLength;
+    else i += maxLength + 1;
     array.splice(0,1);
   }
 
