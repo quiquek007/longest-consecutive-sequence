@@ -25,6 +25,7 @@ module.exports = function longestConsecutiveLength(array) {
     return counter;
   }
 
+  //all tricks with the step
   let i = 0;
   let arrLength = array.length;
   while (i < arrLength) {
@@ -34,7 +35,8 @@ module.exports = function longestConsecutiveLength(array) {
     if ((countBig + countSmall ) >= maxLength) {
       maxLength = countBig + countSmall + 1;
     }
-    i+=maxLength-1;//all tricks with the step
+    if (maxLength < 2) i += maxLength - 1;
+    else i += maxLength;
     array.splice(0,1);
   }
 
