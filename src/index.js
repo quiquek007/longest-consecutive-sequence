@@ -1,3 +1,42 @@
 module.exports = function longestConsecutiveLength(array) {
-  // your solution here
-}
+  let maxLength = 0;
+  if (array.length === 0) return maxLength;
+
+  function getSmalls(num) {
+    let counter = 0;
+    let idx = array.indexOf(--num);
+    while (idx !== -1) {
+      counter++;
+      array.splice(idx, 1);
+      idx = array.indexOf(--num);
+
+    }
+    return counter;
+  }
+
+  function getBiggers(num) {
+    let counter = 0;
+    let idx = array.indexOf(++num);
+    while (idx !== -1) {
+      counter++;
+      array.splice(idx, 1);
+      idx = array.indexOf(++num);
+    }
+    return counter;
+  }
+
+  let i = 0;
+  let arrLength = array.length;
+  while (i < arrLength) {
+    let countBig = getBiggers(array[i]);
+    let countSmall = getSmalls(array[i]);
+    arrLength = (--arrLength - countSmall) - countBig;
+    if ((countBig + countSmall ) >= maxLength) {
+      maxLength = countBig + countSmall + 1;
+    }
+    i+=maxLength-1;//all tricks with the step
+    array.splice(0,1);
+  }
+
+  return maxLength;
+};
