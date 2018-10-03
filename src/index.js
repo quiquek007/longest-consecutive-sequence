@@ -1,43 +1,19 @@
 module.exports = function longestConsecutiveLength(array) {
+
+  let arr = array;
   let maxLength = 0;
-  if (array.length === 0) return maxLength;
+  let currentLength = 1;
 
-  function getSmalls(num) {
-    let counter = 0;
-    let idx = array.indexOf(--num);
-    while (idx !== -1) {
-      counter++;
-      array.splice(idx, 1);
-      idx = array.indexOf(--num);
-
+  arr.sort((a, b) => a - b);
+  for(let i = 0, len = arr.length; i < len; i++){
+    if (arr[i + 1] !== arr[i]) {
+      if (arr[i + 1] === arr[i] + 1) currentLength++;
+      else {
+        if (currentLength > maxLength) maxLength = currentLength;
+        currentLength = 1;
+      }
     }
-    return counter;
-  }
-
-  function getBiggers(num) {
-    let counter = 0;
-    let idx = array.indexOf(++num);
-    while (idx !== -1) {
-      counter++;
-      array.splice(idx, 1);
-      idx = array.indexOf(++num);
-    }
-    return counter;
-  }
-
-  //all tricks with the step
-  let i = 0;
-  let arrLength = array.length;
-  while (i < arrLength) {
-    let countBig = getBiggers(array[i]);
-    let countSmall = getSmalls(array[i]);
-    arrLength = (--arrLength - countSmall) - countBig;
-    if ((countBig + countSmall ) >= maxLength) {
-      maxLength = countBig + countSmall + 1;
-    }
-    if (maxLength < 2) i += maxLength - 1;
-    else i += maxLength + 2;//here is have to i += maxLength;
-    array.splice(0,1);
+    if ((len - i) < maxLength) break;
   }
 
   return maxLength;
